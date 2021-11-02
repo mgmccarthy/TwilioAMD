@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31402.337
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwilioAMD", "TwilioAMD\TwilioAMD.csproj", "{D4452740-034C-442B-8510-BD61AD683A28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwilioAMD.API", "TwilioAMD.API\TwilioAMD.API.csproj", "{BF60C3BE-1B0F-4FF5-BC9F-3AB813EF2A47}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D4452740-034C-442B-8510-BD61AD683A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4452740-034C-442B-8510-BD61AD683A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4452740-034C-442B-8510-BD61AD683A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4452740-034C-442B-8510-BD61AD683A28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF60C3BE-1B0F-4FF5-BC9F-3AB813EF2A47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF60C3BE-1B0F-4FF5-BC9F-3AB813EF2A47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF60C3BE-1B0F-4FF5-BC9F-3AB813EF2A47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF60C3BE-1B0F-4FF5-BC9F-3AB813EF2A47}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8A4C5718-FFB5-486B-A963-9DA71CEDDE77}
+	EndGlobalSection
+EndGlobal
