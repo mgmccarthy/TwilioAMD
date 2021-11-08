@@ -25,7 +25,7 @@ namespace TwilioAMD
                 
                 //asyncAMD settings
                 asyncAmd: "true",
-                asyncAmdStatusCallback: new Uri("http://bdb0-2601-40a-8002-2730-d900-c49a-9f5d-5499.ngrok.io/callback/index"),
+                asyncAmdStatusCallback: new Uri("http://9666-2601-40a-8002-2730-a996-1ec7-9537-5fb3.ngrok.io/callback/index"),
                 asyncAmdStatusCallbackMethod: HttpMethod.Post,
                 
                 //these two are for TwimL callback... we're not using a callback to get Twiml, we're sending it

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Primitives;
 using Twilio.AspNet.Core;
 using Twilio.TwiML;
+using Twilio.Types;
 
 namespace TwilioAMD.API.Controllers
 {
@@ -18,17 +19,47 @@ namespace TwilioAMD.API.Controllers
 
             if (Request.Form.TryGetValue("AnsweredBy", out var answeredBy))
             {
-                //async amd tutorial
-                //https://www.twilio.com/blog/async-answering-machine-detection-tutorial
-
                 Debug.WriteLine($"answeredBy: {answeredBy}");
 
-                //SyncAmd(answeredBy, response);
-                AsyncAmd(answeredBy, response);
+                if (answeredBy != "human")
+                {
+                    response.Say("this is the voice message");
+                }
             }
 
-            return Content(response.ToString(), "text/xml"); 
+            return Content(response.ToString(), "text/xml");
+            //return new TwiMLResult(response.ToString());
         }
+
+        //[HttpPost]
+        //[Route("index")]
+        //public IActionResult Index()
+        //{
+        //    var response = new VoiceResponse();
+
+        //    if (Request.Form.TryGetValue("AnsweredBy", out var answeredBy))
+        //    {
+        //        //async amd tutorial
+        //        //https://www.twilio.com/blog/async-answering-machine-detection-tutorial
+
+        //        Debug.WriteLine($"answeredBy: {answeredBy}");
+
+        //        if (answeredBy == "human")
+        //        {
+        //            response.Say("this is the message I'm going to ask the callee and gather input");
+        //        }
+        //        else
+        //        {
+        //            response.Say("this is the voice message");
+        //        }
+
+        //        //SyncAmd(answeredBy, response);
+        //        //AsyncAmd(answeredBy, response);
+        //    }
+
+        //    return Content(response.ToString(), "text/xml");
+        //    //return new TwiMLResult(response.ToString());
+        //}
 
         private static void AsyncAmd(StringValues answeredBy, VoiceResponse response)
         {
@@ -39,7 +70,7 @@ namespace TwilioAMD.API.Controllers
             }
             else //for AMD async callback URL, AnsweredBy is always "unknown", and no message is left on my voicemail
             {
-                response.Say("this is the voice message");
+                //response.Say("this is the voice message");
             }
         }
 
