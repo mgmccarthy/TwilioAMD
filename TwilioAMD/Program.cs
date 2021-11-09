@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 using Twilio;
 using Twilio.Http;
 using Twilio.Rest.Api.V2010.Account;
-using Twilio.Rest.Lookups.V1;
 
 namespace TwilioAMD
 {

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using Twilio;
 using Twilio.AspNet.Core;
+using Twilio.Http;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.TwiML;
 
@@ -14,6 +15,33 @@ namespace TwilioAMD.API.Controllers
     [Route("callback")]
     public class CallbackController : TwilioController
     {
+        [HttpGet]
+        [Route("start")]
+        public IActionResult Start()
+        {
+            var configuration = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                .AddJsonFile("appsettings.json", true)
+                .AddUserSecrets<Program>()
+                .Build();
+
+            var accountSid = configuration["accountSid"];
+            var authToken = configuration["authToken"];
+
+            TwilioClient.Init(accountSid, authToken);
+
+            var call = CallResource.Create(
+                machineDetection: "DetectMessageEnd",
+                asyncAmd: "true",
+                asyncAmdStatusCallback: new Uri("http://9666-2601-40a-8002-2730-a996-1ec7-9537-5fb3.ngrok.io/callback/index"),
+                asyncAmdStatusCallbackMethod: HttpMethod.Post,
+                twiml: new Twilio.Types.Twiml("<Response><Say>Hello there. This is a longer message that will be about as long as the real meessage askgin you to confirm or cancel your appointment. Hopefully it's long enough!</Say></Response>"),
+                from: new Twilio.Types.PhoneNumber(configuration["fromPhoneNumber"]),
+                to: new Twilio.Types.PhoneNumber(configuration["toPhoneNumber"])
+            );
+
+            return Ok();
+        }
+
         [HttpPost]
         [Route("index")]
         public IActionResult Index()
