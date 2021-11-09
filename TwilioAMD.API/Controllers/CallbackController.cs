@@ -1,9 +1,12 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
+using Twilio;
 using Twilio.AspNet.Core;
+using Twilio.Rest.Api.V2010.Account;
 using Twilio.TwiML;
-using Twilio.Types;
 
 namespace TwilioAMD.API.Controllers
 {
@@ -17,18 +20,33 @@ namespace TwilioAMD.API.Controllers
         {
             var response = new VoiceResponse();
 
+            Request.Form.TryGetValue("CallSid", out var callSid);
+            Request.Form.TryGetValue("AccountSid", out var accountSid);
+
             if (Request.Form.TryGetValue("AnsweredBy", out var answeredBy))
             {
                 Debug.WriteLine($"answeredBy: {answeredBy}");
+                Debug.WriteLine($"callSid: {callSid}");
+                Debug.WriteLine($"accountSid: {accountSid}");
 
                 if (answeredBy != "human")
                 {
-                    response.Say("this is the voice message");
+                    var configuration = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                        .AddJsonFile("appsettings.json", true)
+                        .AddUserSecrets<Program>()
+                        .Build();
+                    var authToken = configuration["authToken"];
+                    TwilioClient.Init(accountSid, authToken);
+
+                    var call = CallResource.Update(
+                        twiml: new Twilio.Types.Twiml("<Response><Say>This is the voicemal I'm goign to leave for you instead of asking you a question b/c you're talking to a machine.</Say></Response>"),
+                        pathSid: callSid,
+                        pathAccountSid: accountSid
+                    );
                 }
             }
 
             return Content(response.ToString(), "text/xml");
-            //return new TwiMLResult(response.ToString());
         }
 
         //[HttpPost]
