@@ -20,15 +20,14 @@ namespace TwilioAMD
 
             TwilioClient.Init(accountSid, authToken);
 
+            //this cost money, so keep it commented out!
             //var type = new List<string> {
             //    "caller-name"
             //};
-
             //var phoneNumber = PhoneNumberResource.Fetch(
             //    type: type,
             //    pathPhoneNumber: new Twilio.Types.PhoneNumber(configuration["toPhoneNumber"])
             //);
-
             //var phoneNumberJson = JsonConvert.SerializeObject(phoneNumber);
 
             var call = CallResource.Create(
