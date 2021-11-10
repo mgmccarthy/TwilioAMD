@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection.Metadata;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Primitives;
 using Twilio;
 using Twilio.AspNet.Core;
+using Twilio.Clients;
 using Twilio.Http;
+using Twilio.Rest;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.TwiML;
 
@@ -15,6 +18,13 @@ namespace TwilioAMD.API.Controllers
     [Route("callback")]
     public class CallbackController : TwilioController
     {
+        private readonly ITwilioRestClient client;
+
+        public CallbackController(ITwilioRestClient client)
+        {
+            this.client = client;
+        }
+
         [HttpGet]
         [Route("start")]
         public IActionResult Start()
@@ -24,19 +34,19 @@ namespace TwilioAMD.API.Controllers
                 .AddUserSecrets<Program>()
                 .Build();
 
-            var accountSid = configuration["accountSid"];
-            var authToken = configuration["authToken"];
-
-            TwilioClient.Init(accountSid, authToken);
+            //var accountSid = configuration["accountSid"];
+            //var authToken = configuration["authToken"];
+            //TwilioClient.Init(accountSid, authToken);
 
             var call = CallResource.Create(
                 machineDetection: "DetectMessageEnd",
                 asyncAmd: "true",
-                asyncAmdStatusCallback: new Uri("http://9666-2601-40a-8002-2730-a996-1ec7-9537-5fb3.ngrok.io/callback/index"),
+                asyncAmdStatusCallback: new Uri("http://23c7-2601-40a-8002-2730-ccdd-6490-15ab-a18d.ngrok.io/callback/index"),
                 asyncAmdStatusCallbackMethod: HttpMethod.Post,
                 twiml: new Twilio.Types.Twiml("<Response><Say>Hello there. This is a longer message that will be about as long as the real meessage askgin you to confirm or cancel your appointment. Hopefully it's long enough!</Say></Response>"),
                 from: new Twilio.Types.PhoneNumber(configuration["fromPhoneNumber"]),
-                to: new Twilio.Types.PhoneNumber(configuration["toPhoneNumber"])
+                to: new Twilio.Types.PhoneNumber(configuration["toPhoneNumber"]),
+                client: this.client
             );
 
             return Ok();
@@ -59,17 +69,19 @@ namespace TwilioAMD.API.Controllers
 
                 if (answeredBy != "human")
                 {
-                    var configuration = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                        .AddJsonFile("appsettings.json", true)
-                        .AddUserSecrets<Program>()
-                        .Build();
-                    var authToken = configuration["authToken"];
-                    TwilioClient.Init(accountSid, authToken);
+
+                    //var configuration = new ConfigurationBuilder().SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    //    .AddJsonFile("appsettings.json", true)
+                    //    .AddUserSecrets<Program>()
+                    //    .Build();
+                    //var authToken = configuration["authToken"];
+                    //TwilioClient.Init(accountSid, authToken);
 
                     var call = CallResource.Update(
                         twiml: new Twilio.Types.Twiml("<Response><Say>This is the voicemal I'm goign to leave for you instead of asking you a question b/c you're talking to a machine.</Say></Response>"),
                         pathSid: callSid,
-                        pathAccountSid: accountSid
+                        pathAccountSid: accountSid,
+                        client: this.client
                     );
                 }
             }

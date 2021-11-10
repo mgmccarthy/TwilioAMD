@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Twilio;
+using Twilio.Clients;
 
 namespace TwilioAMD.API
 {
@@ -19,6 +21,12 @@ namespace TwilioAMD.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //var accountSid = Configuration["accountSid"];
+            //var authToken = Configuration["authToken"];
+            //TwilioClient.Init(accountSid, authToken);
+
+            services.AddHttpClient<ITwilioRestClient, CustomTwilioClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
