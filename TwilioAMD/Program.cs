@@ -33,7 +33,7 @@ namespace TwilioAMD
             var call = CallResource.Create(
                 machineDetection: "DetectMessageEnd",
                 asyncAmd: "true",
-                asyncAmdStatusCallback: new Uri("http://9666-2601-40a-8002-2730-a996-1ec7-9537-5fb3.ngrok.io/callback/index"),
+                asyncAmdStatusCallback: new Uri($"{configuration["ngrokUrl"]}/callback/index"),
                 asyncAmdStatusCallbackMethod: HttpMethod.Post,
                 twiml: new Twilio.Types.Twiml("<Response><Say>Hello there. This is a longer message that will be about as long as the real meessage askgin you to confirm or cancel your appointment. Hopefully it's long enough!</Say></Response>"),
                 from: new Twilio.Types.PhoneNumber(configuration["fromPhoneNumber"]),
