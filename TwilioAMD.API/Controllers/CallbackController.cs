@@ -33,7 +33,7 @@ namespace TwilioAMD.API.Controllers
                 machineDetection: "DetectMessageEnd",
                 
                 asyncAmd: "true",
-                asyncAmdStatusCallback: new Uri($"{configuration["fromPhoneNumber"]}/callback/index"),
+                asyncAmdStatusCallback: new Uri($"{configuration["ngrokUrl"]}/callback/index"),
                 asyncAmdStatusCallbackMethod: HttpMethod.Post,
                 
                 //with all these values maxed, when a human does answer, asymcAMC callback is still kicking in before the Twiml prompt finishes reading
